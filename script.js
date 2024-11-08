@@ -58,10 +58,27 @@ downloadButton.addEventListener('click', () => {
             const img = new Image();
             img.onload = () => {
                 const canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
+                canvas.width = 1950; // 背景含む幅
+                canvas.height = 1350; // 背景含む高さ
                 const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
+
+                // 白背景を描画
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // 黒枠とマージン設定
+                const borderWidth = 5; // 黒枠の幅
+                const marginX = 10;    // 横のマージン
+                const marginY = 30;    // 縦のマージン
+                const xPos = marginX + borderWidth;
+                const yPos = marginY + borderWidth;
+
+                // 黒枠を描画
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(xPos - borderWidth, yPos - borderWidth, img.width + borderWidth * 2, img.height + borderWidth * 2);
+
+                // 画像を描画
+                ctx.drawImage(img, xPos, yPos, img.width, img.height);
                 canvas.toBlob((blob) => {
                     const newFileName = file.name.replace('.png', '.jpg');
                     zip.file(newFileName, blob, { base64: true });
