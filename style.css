@@ -1,0 +1,17 @@
+/* style.css */
+
+#image-container {}
+
+.image-wrapper {
+    width: 1950px;
+    height: 1350px;
+    background-color: white;
+}
+
+.image-frame {
+    border: 5px solid black;
+    /* 黒い枠 */
+    width: 1920px;
+    height: 1280px;
+    margin: 30px 10px;
+}
