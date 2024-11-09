@@ -1,45 +1,4 @@
-// // script.js
-// $(document).ready(function () {
-//     $('#file-input').on('change', function (event) {
-//         const files = event.target.files;
-//         $('#image-container').empty(); // 既存の画像を削除
 
-//         // 各画像ファイルを読み込み、表示用の要素を生成
-//         Array.from(files).forEach(file => {
-//             const reader = new FileReader();
-//             reader.onload = function (e) {
-//                 const img = $('<img>').attr('src', e.target.result).addClass('image-frame');
-//                 const wrapper = $('<div>').addClass('image-wrapper').append(img);
-//                 $('#image-container').append(wrapper);
-//             };
-//             reader.readAsDataURL(file);
-//         });
-//     });
-
-
-//     $('#download-button').on('click', function () {
-//         const imageWrappers = $('#image-container .image-wrapper');
-//         function downloadImage(index) {
-//             if (index >= imageWrappers.length) return; // 全画像の処理が終了したら終了
-
-//             const wrapper = imageWrappers[index];
-//             imageWrappers.each(function (index, wrapper) {
-//                 html2canvas(wrapper, { width: 1950, height: 1350 }).then(canvas => {
-//                     const link = document.createElement('a');
-//                     link.href = canvas.toDataURL('image/jpeg');
-//                     link.download = `image_${index + 1}.jpg`;
-//                     link.click();
-//                     // 次の画像のダウンロード処理を少し遅らせて呼び出す
-//                     setTimeout(() => downloadImage(index + 1), 500);
-//                 });
-//             }
-
-
-//         }
-//         downloadImage(0); // 最初の画像からダウンロード開始
-//     }
-
-// });
 
 const fileInput = document.getElementById('fileInput');
 const downloadButton = document.getElementById('downloadButton');
@@ -57,28 +16,36 @@ downloadButton.addEventListener('click', () => {
         reader.onload = (e) => {
             const img = new Image();
             img.onload = () => {
+                const targetHeight = 1000;
+                const aspectRatio = img.width / img.height;
+                const targetWidth = targetHeight * aspectRatio;
+
+                // 余白と枠を含むキャンバスサイズを計算
+                const margin = 10;
+                const borderWidth = 5;
+                const canvasWidth = targetWidth + margin * 2 + borderWidth * 2;
+                const canvasHeight = targetHeight + margin * 2 + borderWidth * 2;
+
                 const canvas = document.createElement('canvas');
-                canvas.width = 1950; // 背景含む幅
-                canvas.height = 1350; // 背景含む高さ
+                canvas.width = canvasWidth;
+                canvas.height = canvasHeight;
                 const ctx = canvas.getContext('2d');
 
                 // 白背景を描画
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // 黒枠とマージン設定
-                const borderWidth = 5; // 黒枠の幅
-                const marginX = 10;    // 横のマージン
-                const marginY = 30;    // 縦のマージン
-                const xPos = marginX + borderWidth;
-                const yPos = marginY + borderWidth;
-
                 // 黒枠を描画
-                ctx.fillStyle = '#000000';
-                ctx.fillRect(xPos - borderWidth, yPos - borderWidth, img.width + borderWidth * 2, img.height + borderWidth * 2);
+                // ctx.fillStyle = '#000000';
+                // ctx.fillRect(margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);
 
-                // 画像を描画
-                ctx.drawImage(img, xPos, yPos, img.width, img.height);
+                // 画像の描画位置を計算して描画（中央に配置）
+                const xPos = (canvas.width - targetWidth) / 2;
+                const yPos = (canvas.height - targetHeight) / 2;
+                ctx.drawImage(img, xPos, yPos, targetWidth, targetHeight);
+
+
+
                 canvas.toBlob((blob) => {
                     const newFileName = file.name.replace('.png', '.jpg');
                     zip.file(newFileName, blob, { base64: true });
@@ -90,12 +57,12 @@ downloadButton.addEventListener('click', () => {
                                 const a = document.createElement('a');
                                 const url = URL.createObjectURL(content);
                                 a.href = url;
-                                a.download = 'converted_images.zip';
+                                a.download = 'm.zip';
                                 a.click();
                                 URL.revokeObjectURL(url);
                             });
                     }
-                }, 'image/jpeg');
+                }, 'image/jpeg', 0.7);
             };
             img.src = e.target.result;
         };
