@@ -1,5 +1,3 @@
-
-
 const fileInput = document.getElementById('fileInput');
 const downloadButton = document.getElementById('downloadButton');
 downloadButton.addEventListener('click', () => {
@@ -36,8 +34,8 @@ downloadButton.addEventListener('click', () => {
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
                 // 黒枠を描画
-                // ctx.fillStyle = '#000000';
-                // ctx.fillRect(margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(margin, margin, canvas.width - margin * 2, canvas.height - margin * 2);
 
                 // 画像の描画位置を計算して描画（中央に配置）
                 const xPos = (canvas.width - targetWidth) / 2;
