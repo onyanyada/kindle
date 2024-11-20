@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>画像に枠と余白を追加してダウンロード</title>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script> -->
+    <title>漫画用加工</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
@@ -24,15 +23,15 @@
         <h2>2枚を結合する</h2>
         <input type="file" id="imageInput" multiple accept="image/*">
         <button onclick="mergeAndDownload()">ダウンロード</button>
-        <div id="preview"></div>
         <canvas id="canvas" style="display:none;"></canvas>
-
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script src="script.js"></script>
+    <script src="border.js"></script>
     <script src="merge.js"></script>
+    <script src="both.js"></script>
 </body>
 
 </html>
