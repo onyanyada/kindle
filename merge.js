@@ -51,6 +51,9 @@ async function mergeAndDownload() {
         return;
     }
 
+    // 入力フィールドから開始番号を取得
+    const startNumber = parseInt(document.getElementById("startNumber").value);
+
     const zip = new JSZip();
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
@@ -82,8 +85,8 @@ async function mergeAndDownload() {
         // 画像をJPEG形式で取得しZIPに追加
         const dataURL = canvas.toDataURL("image/jpeg");
         const base64Data = dataURL.split(',')[1];
-        const fileIndex = Math.floor(i / 2) + 1; // 順番を決定
-        zip.file(`merged_image_${fileIndex + 753}.jpg`, base64Data, { base64: true });
+        const fileIndex = Math.floor(i / 2); // 順番を決定
+        zip.file(`merged_image_${fileIndex + startNumber}.jpg`, base64Data, { base64: true });
     }
 
     // ZIPファイルを生成してダウンロード

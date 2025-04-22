@@ -22,6 +22,10 @@
     <div>
         <h2>2枚を結合する</h2>
         <input type="file" id="imageInput" multiple accept="image/*">
+        <div>
+            <label for="startNumber">開始番号:</label>
+            <input type="number" id="startNumber" value="0" min="0">
+        </div>
         <button onclick="mergeAndDownload()">ダウンロード</button>
         <canvas id="canvas" style="display:none;"></canvas>
     </div>
