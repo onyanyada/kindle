@@ -83,7 +83,7 @@ async function mergeAndDownload() {
         const dataURL = canvas.toDataURL("image/jpeg");
         const base64Data = dataURL.split(',')[1];
         const fileIndex = Math.floor(i / 2) + 1; // 順番を決定
-        zip.file(`merged_image_${fileIndex + 545}.jpg`, base64Data, { base64: true });
+        zip.file(`merged_image_${fileIndex + 753}.jpg`, base64Data, { base64: true });
     }
 
     // ZIPファイルを生成してダウンロード
